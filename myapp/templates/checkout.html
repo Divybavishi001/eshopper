@@ -243,7 +243,7 @@
                 var areaName = $(this).data('area-name'); 
 
                 $.ajax({
-                    url: 'http://127.0.0.1:8000/get_shipping_charge', 
+                    url: '/get_shipping_charge', 
                     type: 'GET',
                     data: { area_name : areaName }, 
 
@@ -314,7 +314,7 @@
 
                 };
                 $.ajax({
-                    url : 'http://127.0.0.1:8000/editshipaddress',
+                    url : '/editshipaddress',
                     method:'POST',
                     contentType:'application/json',
                     headers : {
@@ -368,7 +368,7 @@
 
                 };
                 $.ajax({
-                    url : 'http://127.0.0.1:8000/shippingaddress',
+                    url : '/shippingaddress',
                     method:'POST',
                     contentType:'application/json',
                     headers : {
@@ -436,7 +436,7 @@
             var csrftoken = $("[name=csrfmiddlewaretoken]").val();
 
             $.ajax({
-                url: 'http://127.0.0.1:8000/Complete_Order', 
+                url: '/Complete_Order', 
                 type: 'POST',
                 beforeSend: function(xhr) {
                     xhr.setRequestHeader("X-CSRFToken", csrftoken);

@@ -408,21 +408,18 @@ def SignUp(request):
 @csrf_exempt
 @api_view(["POST"])
 def userlogin(request):
-    email = request.data.get('Email')
-    mobile = request.data.get('Mobile')
+    emailormobile = request.data.get('EmailorMobile')
+    # mobile = request.data.get('Mobile')
     pass1 = request.data.get('Password1')
+    
     try:
-
-        if email:
-            user = SignUpUser.objects.get(Email=email)
-        elif mobile:
-            user = SignUpUser.objects.get(Mobile=mobile)
-        else:
-            messages.error(request, "Please enter emailid or mobile!!")
+        user = SignUpUser.objects.get(Email=emailormobile)
+    except SignUpUser.DoesNotExist:
+        try:
+            user = SignUpUser.objects.get(Mobile=emailormobile)
+        except SignUpUser.DoesNotExist:
+            messages.error(request, "Please enter valid emailid or mobile!!")
             return JsonResponse({"Status":False,"redirect_url":reverse('login')})
-    except:
-        messages.error(request, "Please enter currect details!!")
-        return JsonResponse({"Status":False,"redirect_url":reverse('login')})
 
     if pass1 != user.Password:
         messages.error(request, "Wrong Password!!")
@@ -2216,13 +2213,3 @@ def complete_replace_order(request):
     order.o_Status='replaced'
     order.save()
     return JsonResponse({"Status":True,"Msg":"Your order is replaced!!"})
-
-
-    
-
-        
-
-
-
-
-

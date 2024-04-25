@@ -274,8 +274,8 @@
 					<span>or use your email for registration</span>
 					<input type="email" name="signup-Email" id="signup-Email" placeholder="Email" />
 					<input type="text" name="signup-Mobile" id="signup-Mobile" placeholder="Mobile" />
-					<input type="password" name="signup-Password1" id="signup-Password1" placeholder="Password1" />
-					<input type="password" name="signup-Password2" id="signup-Password2" placeholder="Password2" />
+					<input type="password" name="signup-Password1" id="signup-Password1" placeholder="Password" />
+					<input type="password" name="signup-Password2" id="signup-Password2" placeholder="Re-Enter Password" />
 					<button  class="signup">Sign Up</button>
 				</form>
 			</div>
@@ -284,8 +284,8 @@
 					{% csrf_token %}
 					<h1>Sign in</h1>
 					<span>or use your account</span>
-					<input type="email" name="signin-Email" id="signin-Email" placeholder="Email" />
-					<input type="text" name="signin-Mobile" id="signin-Mobile" placeholder="Mobile" />
+					<input type="text" name="EmailorMobile" id="EmailorMobile" placeholder="Email or Mobile" />
+					{% comment %} <input type="text" name="signin-Mobile" id="signin-Mobile" placeholder="Mobile" /> {% endcomment %}
 					<input type="password" name="signin-Password1" id="signin-Password1" placeholder="Password" />
 					<a href="{% url 'forgetpass' %}">Forgot your password?</a>
 					<button class="signin">Sign In</button>
@@ -328,19 +328,19 @@
 		document.querySelector('.signin').addEventListener('click', function(event){
 			event.preventDefault();
 		
-			var email = document.querySelector('#signin-Email');
-			var mobile = document.querySelector('#signin-Mobile');
+			var emailormobile = document.querySelector('#EmailorMobile');
+			//var mobile = document.querySelector('#signin-Mobile');
 			var pass1 = document.querySelector('#signin-Password1');
 		
 			var csrfToken = $('[name=csrfmiddlewaretoken]').val();
 		
 			var formdata = {
-				'Email': email.value,
-				'Mobile': mobile.value,
+				'EmailorMobile': emailormobile.value,
+				//'Mobile': mobile.value,
 				'Password1': pass1.value
 			};
 			$.ajax({
-				url : 'http://127.0.0.1:8000/userlogin',
+				url : '/userlogin',
 				method:'POST',
 				contentType:'application/json',
 				headers : {
@@ -388,7 +388,7 @@
 				'Password2': pass2.value
 			};
 			$.ajax({
-				url : 'http://127.0.0.1:8000/SignUp',
+				url : '/SignUp',
 				method:'POST',
 				contentType:'application/json',
 				headers : {

@@ -110,7 +110,7 @@
             $('.cartupdateplus, .cartupdateminues').on('click', function(){
                 var cartid = $(this).data('cartid'); 
                 var p_qty = $(this).data('qty'); 
-                var url = $(this).hasClass('cartupdateplus') ? 'http://127.0.0.1:8000/update_cart_plus' : 'http://127.0.0.1:8000/update_cart_minus';
+                var url = $(this).hasClass('cartupdateplus') ? '/update_cart_plus' : '/update_cart_minus';
         
                 $.ajax({
                     url: url, 
@@ -151,7 +151,7 @@
                     'cartid': cart_id
                 };
                 $.ajax({
-                    url : 'http://127.0.0.1:8000/remove_cart',
+                    url : '/remove_cart',
                     method:'POST',
                     contentType:'application/json',
                     headers : {
