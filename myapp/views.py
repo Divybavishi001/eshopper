@@ -53,12 +53,23 @@ def index(request):
 def header(request):
     return render(request,'header.html')
 
-def subcategories(request,c_id):
+def subcategories(request, c_id):
     if c_id:
-        subcategory = Subcategory.objects.filter(c_id=c_id)
+        subcategories = Subcategory.objects.filter(c_id=c_id)
+        subcategories_with_counts = []
+        for subcategory in subcategories:
+            product_count = Product.objects.filter(s_id=subcategory.s_id).count()
+            subcategories_with_counts.append((subcategory, product_count))
     else:
-        return JsonResponse({"Status":False,"msg":"There is no subcategory in this!!"})
-    return render(request,'subcategory.html',{'subcategory':subcategory})
+        return JsonResponse({"Status": False, "msg": "There is no subcategory in this!!"})
+    return render(request, 'subcategory.html', {'subcategories_with_counts': subcategories_with_counts})
+
+# def subcategories(request,c_id):
+#     if c_id:
+#         subcategory = Subcategory.objects.filter(c_id=c_id)
+#     else:
+#         return JsonResponse({"Status":False,"msg":"There is no subcategory in this!!"})
+#     return render(request,'subcategory.html',{'subcategory':subcategory})
     
 # @api_view(["POST"])
 def cart(request):
